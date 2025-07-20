@@ -56,7 +56,7 @@ analyze_correlation_to_msci_world_returns <- function(input_data) {
 #'
 #' @export
 analyze_correlation_to_msci_world_value_evolution <- function(input_data) {
-  return(analyze_correlation(msci_data_return, input_data))
+  return(analyze_correlation(msci_data_evolution, input_data))
 }
 
 analyze_correlation <- function(reference_data, input_data) {
