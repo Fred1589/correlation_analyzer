@@ -11,6 +11,8 @@ msci_data_evolution_unprepared <- read_csv("./data/MSCI_World_Evolution_in EUR.c
 msci_data_evolution <- msci_data_evolution_unprepared[grepl("^01\\.", msci_data_evolution_unprepared$Year), ]
 msci_data_evolution$Year <- sub("^01\\.", "", msci_data_evolution$Year)
 
+print(msci_data_evolution)
+
 #' Analyze Correlation with MSCI World Returns
 #'
 #' This function checks whether the input data has a 'Year' column, merges it with MSCI World
@@ -67,7 +69,7 @@ analyze_correlation <- function(reference_data, input_data) {
 
   # Join datasets on 'Year' column
   merged_data <- merge(reference_data, input_data, by = "Year")
-  vars_to_check <- setdiff(names(merged_data), c("Year", "Return"))
+  vars_to_check <- setdiff(names(merged_data), c("Year", "Ref_Value"))
 
   results <- data.frame(
     Variable = character(),
@@ -79,7 +81,7 @@ analyze_correlation <- function(reference_data, input_data) {
 
   for (var in vars_to_check) {
     if (is.numeric(merged_data[[var]])) {
-      cor_test <- cor.test(merged_data[[var]], merged_data$Return)
+      cor_test <- cor.test(merged_data[[var]], merged_data$Ref_Value)
       p_val <- cor_test$p.value
       r_val <- cor_test$estimate
 
