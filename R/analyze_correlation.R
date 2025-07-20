@@ -13,9 +13,9 @@ msci_data_return <- read_csv("./data/MSCI_World_Return.csv")
 #' Index return data, and calculates correlation and p-values for all numeric variables
 #' with respect to MSCI returns.
 #'
-#' @param input_data A data.frame containing at least a column named 'year' and other numeric columns.
+#' @param input_data A data.frame containing at least a column named 'Year' and other numeric columns.
 #'
-#' @return A data.frame with variables, p-values, r-values and categorized correlation strength ('high', 'medium', 'low').
+#' @return A data.frame with variables, p-values, significance ('highly significant', 'very significant', 'significant', 'not significant'), r-values and correlation strength ('high', 'medium', 'low').
 #'
 #' @examples
 #' test_data <- data.frame(
@@ -24,16 +24,16 @@ msci_data_return <- read_csv("./data/MSCI_World_Return.csv")
 #'   GDP = runif(21, 1, 3)
 #' )
 #'
-#' analyze_correlation(test_data)
+#' result <- analyze_correlation_to_msci_world_returns(test_data)
 #'
 #' @export
-analyze_correlation <- function(input_data) {
+analyze_correlation_to_msci_world_returns <- function(input_data) {
   # Check if input data contains column named year
   if (!"Year" %in% names(input_data)) {
     stop("No Column named Year found")
   }
 
-  # Join datasets
+  # Join datasets on 'Year' column
   merged_data <- merge(msci_data_return, input_data, by = "Year")
   vars_to_check <- setdiff(names(merged_data), c("Year", "Return"))
 
@@ -60,9 +60,21 @@ analyze_correlation <- function(input_data) {
         "low"
       }
 
+      # Evaluation of significance
+      significance <- if (p_val < 0.001) {
+        "highly significant"
+      } else if (p_val < 0.01) {
+        "very significant"
+      } else if (p_val < 0.05) {
+        "significant"
+      } else {
+        "not significant"
+      }
+
       results <- rbind(results, data.frame(
         Variable = var,
         P_Value = round(p_val, 4),
+        Significance_Strength = significance,
         R_Value = round(r_val, 4),
         Correlation_Strength = strength,
         stringsAsFactors = FALSE
