@@ -1,8 +1,12 @@
 Package: correlationAnalyzer
-Title: Correlation Analysis with MSCI World Returns
 Version: 0.0.1
+Date: 2025-07-20
+Title: Correlation Analysis with MSCI World Returns
 Authors@R: 
-    c(person("Frederik", "Borutta", , "frederik.borutta@campus.lmu.de", role = c("aut", "cre")), person("Felix", "Borutta", , "felix.borutta@campus.lmu.de", role = c("aut", "cre")))
+    c(person("Frederik", "Borutta", , "frederik.borutta@campus.lmu.de", role = c("aut", "cre")), 
+	person("Felix", "Borutta", , "felix.borutta@campus.lmu.de", role = "aut"))
+Author: Frederik Borutta [aut, cre],
+		Felix Borutta [aut]
 Description: Computes correlations between time series data and MSCI World Index returns.
     Requires a column 'Year' in the dataset and returns p-values, r-values and correlation strength.
 Encoding: UTF-8
