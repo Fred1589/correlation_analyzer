@@ -5,6 +5,8 @@ library(base)
 # Exercise Sheet 6
 # Authors: Frederik Borutta (10345490), Felix Borutta (10049639)
 
+msci_data_return <- read_csv("./data/MSCI_World_Return.csv")
+
 #' Analyze Correlation with MSCI World Returns
 #'
 #' This function checks whether the input data has a 'Year' column, merges it with MSCI World
@@ -32,7 +34,6 @@ analyze_correlation <- function(input_data) {
   }
 
   # Join datasets
-  msci_data_return <- read_csv("./data/MSCI_World_Return.csv")
   merged_data <- merge(msci_data_return, input_data, by = "Year")
   vars_to_check <- setdiff(names(merged_data), c("Year", "Return"))
 
